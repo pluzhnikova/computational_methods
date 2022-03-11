@@ -1,14 +1,12 @@
 import numpy as np
 
-
-def find_b(A, x_acc=np.array([None])):  # находим b
+def find_b(A, x_acc=np.array([None])): # поиск b
     if x_acc[0] is None:
         x_acc = np.random.uniform(-100, 100, size=A.shape[0])  # задаем случайные значения для x_acc, если он не задан
     b = np.dot(A, x_acc)
     return b, x_acc
 
-
-def cond(A):  # находим числа обусловленности
+def cond(A):  # нахождение чисел обусловленности
     v0 = 1
     mult = np.zeros(A.shape[0])
     cond_s = np.dot(np.linalg.norm(A), np.linalg.norm(np.linalg.inv(A)))  # Спектральный критерий
@@ -21,8 +19,7 @@ def cond(A):  # находим числа обусловленности
     cond_a = max(mult)  # Угловой критерий
     return cond_s, cond_v, cond_a
 
-
-def varied_matrix(A, b):  # варьируем матрицу и b
+def varied_matrix(A, b):  # варьирование
     k = 0
     x_inacc = np.zeros((3, A.shape[0]))
     for i in (-2, -5, -8):
@@ -33,14 +30,9 @@ def varied_matrix(A, b):  # варьируем матрицу и b
         k += 1
     return x_inacc
 
-
 def print_matrix(A, x_acc, x_inacc):
     print("Матрица:")
     print(*A, sep='\n')
-    print()
-    # print("Точное решение:")
-    # for elem in x_acc:
-    #     print('|{:12.8f}'.format(elem), '|')
     print()
     print("Спектральный критерий:                ", cond_s)
     print("Объемный критерий (критерий Ортеги):  ", cond_v)
